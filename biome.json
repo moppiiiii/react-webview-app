@@ -1,10 +1,10 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
   "extends": [],
   "files": { "ignoreUnknown": true },
-	"organizeImports": {
-		"enabled": true
-	},
+  "organizeImports": {
+    "enabled": true
+  },
   "formatter": {
     "enabled": true,
     "formatWithErrors": false,
