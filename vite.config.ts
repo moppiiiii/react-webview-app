@@ -12,12 +12,5 @@ export default defineConfig({
         outputFilePath: "",
       },
     }),
-  ],
-  css: {
-    preprocessorOptions: {
-      sass: {
-        api: "modern-compiler",
-      },
-    },
-  },
+  ]
 });
