@@ -24,14 +24,17 @@ const HomePage: React.FC = () => {
     return () => clearInterval(timerId);
   }, []);
 
-  const homeTemplateProps: HomeTemplateProps = useMemo(() => ({
-    currentDate: getCurrentDate(),
-    currentTime,
-    timeZoneClassification: getTimeZoneClassification(
-      Number(currentTime.split(":")[0]),
-    ),
-    listItem: data?.list ?? [],
-  }), [currentTime, data]);
+  const homeTemplateProps: HomeTemplateProps = useMemo(
+    () => ({
+      currentDate: getCurrentDate(),
+      currentTime,
+      timeZoneClassification: getTimeZoneClassification(
+        Number(currentTime.split(":")[0]),
+      ),
+      listItem: data?.list ?? [],
+    }),
+    [currentTime, data],
+  );
 
   return <HomeTemplate {...homeTemplateProps} />;
 };
