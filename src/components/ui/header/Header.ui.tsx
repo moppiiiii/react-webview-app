@@ -1,4 +1,5 @@
 import styles from "./Header.ui.module.scss";
+import githubIcon from '../../../assets/github-svgrepo-com.svg';
 
 const Header: React.FC = () => {
   return (
@@ -7,7 +8,7 @@ const Header: React.FC = () => {
       <img
         loading="lazy"
         className={styles["github-icon"]}
-        src="src/assets/github-svgrepo-com.svg"
+        src={githubIcon}
         alt="github"
       />
     </header>
