@@ -5,5 +5,6 @@ export type HomeTemplateProps = {
   currentDate: string;
   currentTime: string;
   timeZoneClassification: (typeof TIME_ZONE_CLASSIFICATION)[keyof typeof TIME_ZONE_CLASSIFICATION];
-  listItem: ListItem[];
+  cityName: string;
+  weatherList: ListItem[];
 };

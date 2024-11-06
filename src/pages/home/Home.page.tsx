@@ -11,7 +11,7 @@ import {
 const HomePage: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(getCurrentTime());
 
-  const location = { latitude: 35.681236, longitude: 139.767125 };
+  const location = { latitude: 34.7022887, longitude: 135.4953509 };
   const { data } = useForecast(location);
 
   useEffect(() => {
@@ -31,7 +31,8 @@ const HomePage: React.FC = () => {
       timeZoneClassification: getTimeZoneClassification(
         Number(currentTime.split(":")[0]),
       ),
-      listItem: data?.list ?? [],
+      cityName: data?.city.name ?? "",
+      weatherList: data?.list ?? [],
     }),
     [currentTime, data],
   );

@@ -1,5 +1,5 @@
 import styles from "./Header.ui.module.scss";
-import githubIcon from "../../../assets/github-svgrepo-com.svg";
+import githubIcon from "../../../assets/icons/github-svgrepo-com.svg";
 
 const Header: React.FC = () => {
   return (

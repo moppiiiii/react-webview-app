@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { WEATHER_TYPE } from "../../components/ui/weather-icon/constants";
 
 const CoordSchema = z.object({
   lat: z.number(),
@@ -28,9 +29,14 @@ const MainSchema = z.object({
   temp_kf: z.number(),
 });
 
+const weatherTypeValues = Object.values(WEATHER_TYPE) as [
+  (typeof WEATHER_TYPE)[keyof typeof WEATHER_TYPE],
+  ...(typeof WEATHER_TYPE)[keyof typeof WEATHER_TYPE][],
+];
+
 const WeatherSchema = z.object({
   id: z.number(),
-  main: z.string(),
+  main: z.enum(weatherTypeValues),
   description: z.string(),
   icon: z.string(),
 });
