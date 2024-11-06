@@ -6,7 +6,6 @@ const HomeTemplate: React.FC<HomeTemplateProps> = ({
   currentDate,
   currentTime,
   timeZoneClassification,
-  listItem,
 }) => {
   return (
     <BaseLayout timeZoneClassification={timeZoneClassification}>
