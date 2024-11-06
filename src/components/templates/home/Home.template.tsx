@@ -1,17 +1,19 @@
-import BaseLayout from "../../layouts/BaseLayout";
+import BaseLayout from "../../layouts/Base.layout";
 import styles from "./Home.template.module.scss";
 import { HomeTemplateProps } from "./type";
 
-const HomeTemplate: React.FC<HomeTemplateProps> = ({ listItem }) => {
+const HomeTemplate: React.FC<HomeTemplateProps> = ({
+  currentDate,
+  currentTime,
+  timeZoneClassification,
+  listItem,
+}) => {
   return (
-    <BaseLayout>
-    <div className={styles["home-container"]}>
-    {listItem.map((item) => {
-        return <p key={item.dt} >{item.dt_txt}</p>;
-    })}
-    </div>
-
-      
+    <BaseLayout timeZoneClassification={timeZoneClassification}>
+      <div className={styles["home-container"]}>
+        <p className={styles["current-date"]}>{currentDate}</p>
+        <p className={styles["current-time"]}>{currentTime}</p>
+      </div>
     </BaseLayout>
   );
 };
