@@ -1,0 +1,38 @@
+.todays-weather-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    > .city-name {
+        color: #fff;
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    > .todays-weather-list {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+
+        > .weather-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+
+            > img {
+                width: 84px;
+                height: 72px;
+            }
+
+            > .weather-time {
+                color: #fff;
+                font-size: 18px;
+                font-weight: 600;
+            }
+        }
+    }
+}

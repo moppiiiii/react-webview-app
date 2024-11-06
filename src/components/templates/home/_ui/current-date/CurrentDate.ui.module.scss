@@ -1,0 +1,19 @@
+.current-date-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    > .current-date {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    
+    > .current-time {
+        color: #fff;
+        font-size: 42px;
+        font-weight: 700;
+    }
+}

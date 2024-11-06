@@ -7,7 +7,7 @@ import WiDaySunny from "../../../assets/icons/day.svg";
 import WiCloudy from "../../../assets/icons/cloudy.svg";
 import { WeatherIconProps } from "./type";
 
-const WeatherIcon: React.FC<WeatherIconProps> = ({ weatherType }) => {
+const WeatherIcon: React.FC<WeatherIconProps> = ({ weatherType, isLazy }) => {
   const iconMap: Record<
     (typeof WEATHER_TYPE)[keyof typeof WEATHER_TYPE],
     string
@@ -22,7 +22,7 @@ const WeatherIcon: React.FC<WeatherIconProps> = ({ weatherType }) => {
 
   return (
     <img
-      loading="lazy"
+      loading={isLazy ? "lazy" : "eager"}
       alt={`${weatherType} icon`}
       src={iconMap[weatherType]}
     />
