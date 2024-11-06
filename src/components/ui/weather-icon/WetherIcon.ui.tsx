@@ -1,8 +1,8 @@
 import { WEATHER_TYPE } from "./constants";
 import WiThunderstorm from "../../../assets/icons/thunder.svg";
-import WiDrizzle from "../../../assets/icons/rainy-7.svg";
-import WiRain from "../../../assets/icons/rainy-7.svg";
-import WiSnow from "../../../assets/icons/snowy-6.svg";
+import WiDrizzle from "../../../assets/icons/drizzle.svg";
+import WiRain from "../../../assets/icons/rainy.svg";
+import WiSnow from "../../../assets/icons/snowy.svg";
 import WiDaySunny from "../../../assets/icons/day.svg";
 import WiCloudy from "../../../assets/icons/cloudy.svg";
 import { WeatherIconProps } from "./type";

@@ -5,6 +5,7 @@ import useForecast from "../../hooks/forecast";
 import {
   getCurrentDate,
   getCurrentTime,
+  getDesignatedDateTime,
   getTimeZoneClassification,
 } from "../../libs/date";
 
@@ -13,6 +14,8 @@ const HomePage: React.FC = () => {
 
   const location = { latitude: 34.7022887, longitude: 135.4953509 };
   const { data } = useForecast(location);
+
+  const currentDate = getCurrentDate();
 
   useEffect(() => {
     // 1秒ごとに時刻を更新するためのインターバルを設定
@@ -26,15 +29,21 @@ const HomePage: React.FC = () => {
 
   const homeTemplateProps: HomeTemplateProps = useMemo(
     () => ({
-      currentDate: getCurrentDate(),
+      currentDate,
       currentTime,
       timeZoneClassification: getTimeZoneClassification(
         Number(currentTime.split(":")[0]),
       ),
       cityName: data?.city.name ?? "",
-      weatherList: data?.list ?? [],
+      todaysWeatherList:
+        data?.list
+          .filter((v) => v.dt_txt.includes(currentDate))
+          .map((v) => ({
+            weatherType: v.weather[0].main,
+            time: getDesignatedDateTime(v.dt_txt),
+          })) ?? [],
     }),
-    [currentTime, data],
+    [currentTime, data, currentDate],
   );
 
   return <HomeTemplate {...homeTemplateProps} />;

@@ -1,5 +1,10 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { getCurrentDate, getCurrentTime, getTimeZoneClassification } from "./";
+import {
+  getCurrentDate,
+  getCurrentTime,
+  getDesignatedDateTime,
+  getTimeZoneClassification,
+} from "./";
 import { format } from "date-fns";
 import { TIME_ZONE_CLASSIFICATION } from "./constants";
 
@@ -19,8 +24,8 @@ describe("date libs", () => {
   });
 
   describe("getCurrentDate 関数", () => {
-    it('現在の日付が "yyyy/MM/dd" 形式で返されること', () => {
-      const 期待される日付 = format(固定日時, "yyyy/MM/dd");
+    it('現在の日付が "yyyy-MM-dd" 形式で返されること', () => {
+      const 期待される日付 = format(固定日時, "yyyy-MM-dd");
       const 現在の日付 = getCurrentDate();
       expect(現在の日付).toBe(期待される日付);
     });
@@ -31,6 +36,14 @@ describe("date libs", () => {
       const 期待される時間 = format(固定日時, "HH:mm");
       const 現在の時間 = getCurrentTime();
       expect(現在の時間).toBe(期待される時間);
+    });
+  });
+
+  describe("getDesignatedDateTime 関数", () => {
+    it("指定された日付の時間を正しくフォーマットできること", () => {
+      const input = "2024-11-06 11:00:00";
+      const expected = "11:00";
+      expect(getDesignatedDateTime(input)).toBe(expected);
     });
   });
 

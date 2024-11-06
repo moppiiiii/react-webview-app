@@ -6,7 +6,7 @@ import { TIME_ZONE_CLASSIFICATION } from "./constants";
  * @returns 現在の日付
  */
 export const getCurrentDate = () => {
-  return format(new Date(), "yyyy/MM/dd");
+  return format(new Date(), "yyyy-MM-dd");
 };
 
 /**
@@ -15,6 +15,15 @@ export const getCurrentDate = () => {
  */
 export const getCurrentTime = () => {
   return format(new Date(), "HH:mm");
+};
+
+/**
+ * 指定された日付の時間を取得
+ * @param date 指定された日付
+ * @returns 指定された日付の時間
+ */
+export const getDesignatedDateTime = (date: string) => {
+  return format(new Date(date), "HH:mm");
 };
 
 /**
