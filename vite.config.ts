@@ -32,7 +32,7 @@ export default defineConfig({
           {
             // OpenWeatherMap API のURLパターンに合わせて修正
             urlPattern: /^https:\/\/api\.openweathermap\.org\/data\/2\.5\/.*/,
-            handler: 'NetworkFirst', // ネットワークファースト戦略
+            handler: 'CacheFirst', // ネットワークファースト戦略
             options: {
               cacheName: 'openweather-api-cache',
               networkTimeoutSeconds: 10, // ネットワークタイムアウト（秒）
