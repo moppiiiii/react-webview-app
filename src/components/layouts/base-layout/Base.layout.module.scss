@@ -1,6 +1,20 @@
+@use "../../../styles/responsive.scss";
+
 .base-layout-container {
     height: 100vh;
     padding: 24px 48px;
+}
+
+@include responsive.max('tab') {
+    .base-layout-container {
+        padding: 24px 48px;
+    }
+}
+
+@include responsive.max('sp') {
+    .base-layout-container {
+        padding: 12px 12px;
+    }
 }
 
 .base-morning-background {

@@ -1,3 +1,5 @@
+@use "../../../styles/responsive.scss";
+
 .home-container {
     padding: 48px 120px;
     display: flex;
@@ -5,4 +7,17 @@
     justify-content: center;
     align-items: center;
     gap: 24px;
+}
+
+@include responsive.max('tab') {
+    .home-container {
+        padding: 48px 60px;
+    }
+}
+
+@include responsive.max('sp') {
+    .home-container {
+        padding: 24px 12px;
+        gap: 12px;
+    }
 }

@@ -1,0 +1,19 @@
+.not-found-template-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+
+    > .not-found-text {
+        font-size: 100px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    > .not-found-detail-text {
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+    }
+}

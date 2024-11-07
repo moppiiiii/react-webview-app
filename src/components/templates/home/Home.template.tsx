@@ -1,4 +1,4 @@
-import BaseLayout from "../../layouts/Base.layout";
+import BaseLayout from "../../layouts/base-layout/Base.layout";
 import CurrentDate from "./_ui/current-date/CurrentDate.ui";
 import TodaysWeatherList from "./_ui/todays-weather-list/TodaysWeatherList.ui";
 import styles from "./Home.template.module.scss";

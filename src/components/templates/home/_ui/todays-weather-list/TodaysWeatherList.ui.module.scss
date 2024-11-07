@@ -1,3 +1,5 @@
+@use "../../../../../styles/responsive.scss";
+
 .todays-weather-wrapper {
     display: flex;
     flex-direction: column;
@@ -26,12 +28,34 @@
             > img {
                 width: 84px;
                 height: 72px;
+                object-fit: contain;
             }
 
             > .weather-time {
                 color: #fff;
                 font-size: 18px;
                 font-weight: 600;
+            }
+        }
+    }
+}
+
+@include responsive.max('sp') {
+    .todays-weather-wrapper {
+        > .todays-weather-list {
+            > .weather-card {
+                gap: 0px;
+
+                > img {
+                    width: 60px;
+                    height: 48px;
+                    object-fit: contain;
+                }
+
+                > .weather-time {
+                    font-size: 12px;
+                    font-weight: 600;
+                }
             }
         }
     }

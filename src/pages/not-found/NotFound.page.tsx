@@ -1,5 +1,7 @@
+import NotFoundTemplate from "../../components/templates/not-found/NotFound.template";
+
 const NotFoundPage: React.FC = () => {
-  return <div>404</div>;
+  return <NotFoundTemplate />;
 };
 
 NotFoundPage.whyDidYouRender = true;

@@ -4,7 +4,9 @@ import githubIcon from "../../../assets/icons/github-svgrepo-com.svg";
 const Header: React.FC = () => {
   return (
     <header className={styles["header-container"]}>
-      <p className={styles["header-text"]}>Weather App</p>
+      <a href="/" title="Top Page">
+        <p className={styles["header-text"]}>Weather App</p>
+      </a>
       <a
         href="https://github.com/moppiiiii/react-webview-app"
         title="Github Repository"

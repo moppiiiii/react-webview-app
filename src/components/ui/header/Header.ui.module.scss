@@ -1,3 +1,5 @@
+@use "../../../styles/responsive.scss";
+
 .header-container {
     width: 100%;
     display: flex;
@@ -5,7 +7,7 @@
     align-items: center;
     justify-content: center;
 
-    > .header-text {
+    .header-text {
         color: #fff;
         font-weight: 600;
         font-size: 18px;
@@ -15,5 +17,13 @@
         fill: #fff;
         width: 24px;
         height: 24px;
+    }
+}
+
+@include responsive.max('sp') {
+    .header-container {
+        align-items: start;
+        justify-content: space-between;
+        padding-inline: 12px;
     }
 }

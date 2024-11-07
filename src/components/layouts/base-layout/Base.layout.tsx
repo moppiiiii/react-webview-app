@@ -1,4 +1,4 @@
-import Header from "../ui/header/Header.ui";
+import Header from "../../ui/header/Header.ui";
 import styles from "./Base.layout.module.scss";
 import { BaseLayoutProps } from "./type";
 

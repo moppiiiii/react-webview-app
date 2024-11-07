@@ -6,7 +6,7 @@ import { TIME_ZONE_CLASSIFICATION } from "./constants";
  * @returns 2桁の文字列
  */
 export const padZero = (num: number): string => {
-  return num.toString().padStart(2, '0');
+  return num.toString().padStart(2, "0");
 };
 
 /**
@@ -39,10 +39,10 @@ export const getCurrentTime = (): string => {
  */
 export const getDesignatedDateTime = (date: string): string => {
   const specifiedDate = new Date(date);
-  
+
   // 有効な日付かどうかを確認
   if (isNaN(specifiedDate.getTime())) {
-    throw new Error('無効な日付形式です。');
+    throw new Error("無効な日付形式です。");
   }
 
   const hours = padZero(specifiedDate.getHours());

@@ -23,7 +23,7 @@ describe("date libs", () => {
     vi.useRealTimers();
   });
 
-  describe('getCurrentDate 関数', () => {
+  describe("getCurrentDate 関数", () => {
     it('現在の日付が "yyyy-MM-dd" 形式で返されること', () => {
       const expectedYear = 固定日時.getFullYear();
       const expectedMonth = padZero(固定日時.getMonth() + 1); // 月は0から始まるため +1
@@ -35,7 +35,7 @@ describe("date libs", () => {
     });
   });
 
-  describe('getCurrentTime 関数', () => {
+  describe("getCurrentTime 関数", () => {
     it('現在の時間が "HH:mm" 形式で返されること', () => {
       const expectedHours = padZero(固定日時.getHours());
       const expectedMinutes = padZero(固定日時.getMinutes());
@@ -46,16 +46,18 @@ describe("date libs", () => {
     });
   });
 
-  describe('getDesignatedDateTime 関数', () => {
-    it('指定された日付の時間を正しくフォーマットできること', () => {
-      const input = '2024-11-06 11:00:00';
-      const expected = '11:00';
+  describe("getDesignatedDateTime 関数", () => {
+    it("指定された日付の時間を正しくフォーマットできること", () => {
+      const input = "2024-11-06 11:00:00";
+      const expected = "11:00";
       expect(getDesignatedDateTime(input)).toBe(expected);
     });
 
-    it('無効な日付形式が渡された場合にエラーを投げること', () => {
-      const invalidInput = 'invalid-date-string';
-      expect(() => getDesignatedDateTime(invalidInput)).toThrow('無効な日付形式です。');
+    it("無効な日付形式が渡された場合にエラーを投げること", () => {
+      const invalidInput = "invalid-date-string";
+      expect(() => getDesignatedDateTime(invalidInput)).toThrow(
+        "無効な日付形式です。",
+      );
     });
   });
 
@@ -80,4 +82,3 @@ describe("date libs", () => {
     });
   });
 });
-
