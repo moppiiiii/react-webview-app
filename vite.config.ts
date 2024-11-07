@@ -64,4 +64,7 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    assetsInlineLimit: 0, // アセットのインライン化を無効化
+  },
 });
