@@ -32,10 +32,10 @@ export default defineConfig({
           {
             // OpenWeatherMap API のURLパターンに合わせて修正
             urlPattern: /^https:\/\/api\.openweathermap\.org\/data\/2\.5\/.*/,
-            handler: 'CacheFirst', // ネットワークファースト戦略
+            handler: 'NetworkFirst', // ネットワークファースト戦略
             options: {
               cacheName: 'openweather-api-cache',
-              networkTimeoutSeconds: 10, // ネットワークタイムアウト（秒）
+              networkTimeoutSeconds: 2, // ネットワークタイムアウト（秒）
               expiration: {
                 maxEntries: 50, // キャッシュエントリの最大数
                 maxAgeSeconds: 60 * 60 * 24, // 1日（秒）
