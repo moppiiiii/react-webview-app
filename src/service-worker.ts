@@ -46,7 +46,7 @@ registerRoute(
   ({ url }) => url.origin === new URL(API_BASE_URL).origin,
   new NetworkFirst({
     cacheName: API_CACHE_NAME,
-    networkTimeoutSeconds: 3,
+    networkTimeoutSeconds: 1,
     plugins: [
       {
         async cacheDidUpdate({ request, newResponse }) {
