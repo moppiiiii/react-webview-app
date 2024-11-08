@@ -40,7 +40,7 @@ registerRoute(
 );
 
 // APIリクエストのキャッシュ戦略
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = process.env.VITE_API_BASE_URL ?? '';
 
 registerRoute(
   ({ url }) => url.origin === new URL(API_BASE_URL).origin,

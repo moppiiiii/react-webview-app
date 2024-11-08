@@ -21,6 +21,9 @@ export default defineConfig({
       filename: 'service-worker.ts',
     }),
   ],
+  define: {
+    'process.env.VITE_API_BASE_URL': JSON.stringify(process.env.VITE_API_BASE_URL),
+  },
   build: {
     assetsInlineLimit: 0, // アセットのインライン化を無効化
   },
