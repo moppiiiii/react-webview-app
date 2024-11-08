@@ -11,4 +11,4 @@ export const API_CACHE_NAME = "api-cache" as const;
 /**
  * オフラインDBの名前
  */
-export const OFFLINE_DB_NAME = "react-offline-db" as const;
+export const OFFLINE_DB_NAME = "weather-app-offline-db" as const;

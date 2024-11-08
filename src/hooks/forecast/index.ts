@@ -1,7 +1,7 @@
 import useSWR, { SWRConfiguration } from "swr";
-import { fetcher } from "../../libs/fetcher";
 import { UseForecastResponse, type ForecastResponse } from "./type";
 import getUrl from "./libs/getUrl";
+import { fetchWithCache } from "../../libs/api-cache";
 
 const useForecast = (
   location: { latitude: number; longitude: number },
@@ -11,7 +11,7 @@ const useForecast = (
 
   const { data, error, mutate } = useSWR<ForecastResponse>(
     forecastUrl,
-    fetcher,
+    fetchWithCache,
     config,
   );
 

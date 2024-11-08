@@ -3,4 +3,4 @@
  */
 export const WEATHER_API_ENDPOINTS = {
   FORECAST: "forecast",
-};
+} as const;
