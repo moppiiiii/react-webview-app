@@ -86,9 +86,8 @@ export type ListItem = z.TypeOf<typeof ListItemSchema>;
 export type ForecastResponse = z.TypeOf<typeof ForecastResponseSchema>;
 
 export type UseForecastResponse = {
-  data: ForecastResponse | undefined;
+  data: ForecastResponse;
   isLoading: boolean;
   isError: boolean;
   error: unknown | undefined;
-  mutate: () => Promise<ForecastResponse | undefined>;
 };

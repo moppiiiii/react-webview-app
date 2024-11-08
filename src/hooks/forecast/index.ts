@@ -1,26 +1,42 @@
-import useSWR, { SWRConfiguration } from "swr";
-import { UseForecastResponse, type ForecastResponse } from "./type";
+import { useEffect, useState } from "react";
+import { ForecastResponse, UseForecastResponse } from "./type";
 import getUrl from "./libs/getUrl";
 import { fetchWithCache } from "../../libs/api-cache";
 
-const useForecast = (
+export const useForecast = (
   location: { latitude: number; longitude: number },
-  config?: SWRConfiguration,
 ): UseForecastResponse => {
+  const [data, setData] = useState<ForecastResponse | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
+
   const forecastUrl = getUrl(location);
 
-  const { data, error, mutate } = useSWR<ForecastResponse>(
-    forecastUrl,
-    fetchWithCache,
-    config,
-  );
+  const fetchData = async () => {
+    setIsLoading(true);
+    setIsError(false);
+    setError(null);
+    try {
+      const result = await fetchWithCache<ForecastResponse>(forecastUrl);
+      setData(result);
+    } catch (err) {
+      setIsError(true);
+      setError(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [forecastUrl]); // forecastUrl が変わったときに再フェッチ
   return {
-    data,
-    isLoading: !error && !data,
-    isError: !!error,
+    data: data!,
+    isLoading,
+    isError, 
     error,
-    mutate: mutate as () => Promise<ForecastResponse | undefined>,
   };
 };
 
