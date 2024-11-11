@@ -121,8 +121,11 @@ export async function fetchForecast(): Promise<ForecastResponse | null> {
   } else {
     console.log("Offline: Retrieving forecast from IndexedDB.");
     // オフラインの場合はIndexedDBからデータを取得
+    console.log("オフライン状態です。IndexedDBからデータを取得します。");
     const savedForecast = await getLatestForecast();
+    console.log("indexedDBからデータを取得しました", saveForecast);
     if (savedForecast) {
+      console.log("データを返却します");
       return savedForecast;
     } else {
       console.error("No forecast data available in IndexedDB.");

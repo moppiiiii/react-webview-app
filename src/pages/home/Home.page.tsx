@@ -14,7 +14,9 @@ const HomePage: React.FC = () => {
       try {
         const data = await fetchForecast();
         if (data) {
+          console.log("Home.page.tsxでデータを受け取りました", data);
           setForecast(data);
+          console.log("Home.page.tsxでデータをセットしました");
         } else {
           setError("予報データが利用できません。");
         }
