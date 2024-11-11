@@ -123,7 +123,7 @@ export async function fetchForecast(): Promise<ForecastResponse | null> {
     // オフラインの場合はIndexedDBからデータを取得
     console.log("オフライン状態です。IndexedDBからデータを取得します。");
     const savedForecast = await getLatestForecast();
-    console.log("indexedDBからデータを取得しました", saveForecast);
+    console.log("indexedDBからデータを取得しました", savedForecast);
     if (savedForecast) {
       console.log("データを返却します");
       return savedForecast;
