@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   clearForecasts,
-  getLatestForecast,
-  saveForecast,
+  fetchForecast,
 } from "../../libs/indexed-db/forecast";
 import { ForecastResponse } from "../../hooks/forecast/type";
 
@@ -12,87 +11,56 @@ const HomePage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchForecast = async () => {
+    const loadForecast = async () => {
       setLoading(true);
+      setError(null); // エラー状態をリセット
       try {
-        if (navigator.onLine) {
-          console.log("オンラインです");
-          // Replace with your actual API call
-          const response = await fetch(
-            `${import.meta.env.VITE_WEATHER_API_URL}/forecast?lat=34.7022887&lon=135.4953509&lang=jp&units=metric&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
-          );
-
-          if (!response.ok) {
-            throw new Error(
-              `Network response was not ok: ${response.statusText}`,
-            );
-          }
-
-          const data = await response.json();
-
-          // IndexedDBに保存
-          const saved = await saveForecast(data);
-          if (saved) {
-            setForecast(data as ForecastResponse);
-          } else {
-            throw new Error("Failed to save forecast to IndexedDB.");
-          }
+        const data = await fetchForecast();
+        if (data) {
+          setForecast(data);
         } else {
-          console.log("オフラインです");
-          // Retrieve from IndexedDB
-          const savedForecast = await getLatestForecast();
-          console.log("indexedDBから取得したデータ", savedForecast);
-          if (savedForecast) {
-            setForecast(savedForecast);
-          } else {
-            setError("No forecast data available offline.");
-          }
+          setError('予報データが利用できません。');
         }
-      } catch (fetchError) {
-        console.warn(
-          "Fetch failed, attempting to retrieve from IndexedDB:",
-          fetchError,
-        );
-
-        // IndexedDBからデータを取得
-        const savedForecast = await getLatestForecast();
-        if (savedForecast) {
-          setForecast(savedForecast);
-        } else {
-          setError("No forecast data available offline.");
-        }
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        setError('予期せぬエラーが発生しました。');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchForecast();
+    loadForecast();
 
-    // Optional: Listen for online/offline events to sync data
-    window.addEventListener("online", fetchForecast);
+    // オンラインになった時にデータを再取得
+    const handleOnline = () => {
+      console.log('Back online, fetching latest forecast.');
+      loadForecast();
+    };
+
+    window.addEventListener('online', handleOnline);
 
     return () => {
-      window.removeEventListener("online", fetchForecast);
+      window.removeEventListener('online', handleOnline);
     };
   }, []);
 
-  if (loading) return <div>Loading forecast...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div>予報を読み込み中...</div>;
+  if (error) return <div>エラー: {error}</div>;
+  if (!forecast) return <div>予報データがありません。</div>;
 
   return (
     <div>
-      <h2>Weather Forecast for {forecast?.city.name}</h2>
-      {/* Render forecast details */}
-      {/* Example: */}
-      <p>Temperature: {forecast?.list[0].main.temp}°C</p>
-      <p>Weather: {forecast?.list[0].weather[0].description}</p>
-      {/* Add more details as needed */}
-      <button
-        style={{ border: "1px solid black", marginTop: "20px" }}
-        onClick={() => clearForecasts()}
-      >
-        Cache Clear
-      </button>
+      <h2>{forecast.city.name} の天気予報</h2>
+      {/* 詳細情報の表示 */}
+      {forecast.list.map((item, index) => (
+        <div key={index}>
+          <p>{item.dt_txt}</p>
+          <p>気温: {item.main.temp}°C</p>
+          <p>天気: {item.weather[0].description}</p>
+          {/* 必要に応じて他の詳細を追加 */}
+        </div>
+      ))}
+      <button style={{ border: "1px solid black", marginTop: "20px" }} onClick={() => clearForecasts()}>Cache Clear</button>
     </div>
   );
 };
