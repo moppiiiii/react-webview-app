@@ -1,52 +1,70 @@
-import { useEffect, useMemo, useState } from "react";
-import HomeTemplate from "../../components/templates/home/Home.template";
-import { HomeTemplateProps } from "../../components/templates/home/type";
-import useForecast from "../../hooks/forecast";
+import { useEffect, useState } from "react";
 import {
-  getCurrentDate,
-  getCurrentTime,
-  getDesignatedDateTime,
-  getTimeZoneClassification,
-} from "../../libs/date";
+  getLatestForecast,
+  saveForecast,
+} from "../../libs/indexed-db/forecast";
+import { ForecastResponse } from "../../hooks/forecast/type";
 
 const HomePage: React.FC = () => {
-  const [currentTime, setCurrentTime] = useState(getCurrentTime());
-
-  const location = { latitude: 34.7022887, longitude: 135.4953509 };
-  const { data } = useForecast(location);
-
-  const currentDate = getCurrentDate();
+  const [forecast, setForecast] = useState<ForecastResponse | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // 1秒ごとに時刻を更新するためのインターバルを設定
-    const timerId = setInterval(() => {
-      setCurrentTime(getCurrentTime());
-    }, 1000);
+    const fetchForecast = async () => {
+      setLoading(true);
+      try {
+        if (navigator.onLine) {
+          // Replace with your actual API call
+          const response = await fetch(
+            `${import.meta.env.VITE_WEATHER_API_URL}/forecast?lat=34.7022887&lon=135.4953509&lang=jp&units=metric&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
+          );
+          const data = await response.json();
 
-    // クリーンアップ関数でインターバルをクリア
-    return () => clearInterval(timerId);
+          // Save to IndexedDB
+          await saveForecast(data);
+
+          setForecast(data as ForecastResponse);
+        } else {
+          // Retrieve from IndexedDB
+          const savedForecast = await getLatestForecast();
+          if (savedForecast) {
+            setForecast(savedForecast);
+          } else {
+            setError("No forecast data available offline.");
+          }
+        }
+      } catch (err) {
+        setError("Failed to fetch forecast data.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchForecast();
+
+    // Optional: Listen for online/offline events to sync data
+    window.addEventListener("online", fetchForecast);
+
+    return () => {
+      window.removeEventListener("online", fetchForecast);
+    };
   }, []);
 
-  const homeTemplateProps: HomeTemplateProps = useMemo(
-    () => ({
-      currentDate,
-      currentTime,
-      timeZoneClassification: getTimeZoneClassification(
-        Number(currentTime.split(":")[0]),
-      ),
-      cityName: data?.city.name ?? "",
-      todaysWeatherList:
-        data?.list
-          .filter((v) => v.dt_txt.includes(currentDate))
-          .map((v) => ({
-            weatherType: v.weather[0].main,
-            time: getDesignatedDateTime(v.dt_txt),
-          })) ?? [],
-    }),
-    [currentTime, data, currentDate],
-  );
+  if (loading) return <div>Loading forecast...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-  return <HomeTemplate {...homeTemplateProps} />;
+  return (
+    <div>
+      <h2>Weather Forecast for {forecast?.city.name}</h2>
+      {/* Render forecast details */}
+      {/* Example: */}
+      <p>Temperature: {forecast?.list[0].main.temp}°C</p>
+      <p>Weather: {forecast?.list[0].weather[0].description}</p>
+      {/* Add more details as needed */}
+    </div>
+  );
 };
 
 HomePage.whyDidYouRender = true;

@@ -1,28 +1,21 @@
-import { openDB, DBSchema, IDBPDatabase } from 'idb';
+import Dexie, { Table } from "dexie";
+import { ForecastResponse } from "../../hooks/forecast/type";
 
-interface WeatherDB extends DBSchema {
-  apiCache: {
-    key: string;
-    value: {
-      timestamp: number;
-      data: any;
-    };
-    indexes: { 'by-timestamp': number };
-  };
+export interface ForecastEntry {
+  id?: number; // Auto-incremented primary key
+  timestamp: number; // Unix timestamp when the entry was saved
+  data: ForecastResponse;
 }
 
-let dbPromise: Promise<IDBPDatabase<WeatherDB>>;
+export class ForecastDatabase extends Dexie {
+  forecasts!: Table<ForecastEntry, number>;
 
-export function getDB() {
-  if (!dbPromise) {
-    dbPromise = openDB<WeatherDB>('WeatherAppDB', 1, {
-      upgrade(db) {
-        const store = db.createObjectStore('apiCache', {
-          keyPath: 'key',
-        });
-        store.createIndex('by-timestamp', 'timestamp');
-      },
+  constructor() {
+    super("ForecastDatabase");
+    this.version(1).stores({
+      forecasts: "++id, timestamp",
     });
   }
-  return dbPromise;
 }
+
+export const db = new ForecastDatabase();
