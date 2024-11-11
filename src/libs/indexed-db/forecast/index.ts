@@ -87,41 +87,46 @@ export async function clearForecasts(): Promise<void> {
  * @returns ForecastResponseまたはnull。
  */
 export async function fetchForecast(): Promise<ForecastResponse | null> {
-    if (navigator.onLine) {
-      try {
-        const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?lat=34.7022887&lon=135.4953509&lang=jp&units=metric&appid=b14cd7b4c39cf4332dd5957feb3353f2'); // 実際のAPIエンドポイントに変更してください
-        if (!response.ok) {
-          throw new Error(`API response was not ok: ${response.statusText}`);
-        }
-        const data = await response.json();
-  
-        // IndexedDBに保存
-        const saved = await saveForecast(data);
-        if (saved) {
-          return data as ForecastResponse;
-        } else {
-          throw new Error('Failed to save forecast to IndexedDB.');
-        }
-      } catch (error) {
-        console.warn('Fetch failed, attempting to retrieve from IndexedDB:', error);
-        // フェッチに失敗した場合でもIndexedDBからデータを取得
-        const savedForecast = await getLatestForecast();
-        if (savedForecast) {
-          return savedForecast;
-        } else {
-          console.error('No forecast data available in IndexedDB.');
-          return null;
-        }
+  if (navigator.onLine) {
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=34.7022887&lon=135.4953509&lang=jp&units=metric&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
+      ); // 実際のAPIエンドポイントに変更してください
+      if (!response.ok) {
+        throw new Error(`API response was not ok: ${response.statusText}`);
       }
-    } else {
-      console.log('Offline: Retrieving forecast from IndexedDB.');
-      // オフラインの場合はIndexedDBからデータを取得
+      const data = await response.json();
+
+      // IndexedDBに保存
+      const saved = await saveForecast(data);
+      if (saved) {
+        return data as ForecastResponse;
+      } else {
+        throw new Error("Failed to save forecast to IndexedDB.");
+      }
+    } catch (error) {
+      console.warn(
+        "Fetch failed, attempting to retrieve from IndexedDB:",
+        error,
+      );
+      // フェッチに失敗した場合でもIndexedDBからデータを取得
       const savedForecast = await getLatestForecast();
       if (savedForecast) {
         return savedForecast;
       } else {
-        console.error('No forecast data available in IndexedDB.');
+        console.error("No forecast data available in IndexedDB.");
         return null;
       }
     }
+  } else {
+    console.log("Offline: Retrieving forecast from IndexedDB.");
+    // オフラインの場合はIndexedDBからデータを取得
+    const savedForecast = await getLatestForecast();
+    if (savedForecast) {
+      return savedForecast;
+    } else {
+      console.error("No forecast data available in IndexedDB.");
+      return null;
+    }
   }
+}

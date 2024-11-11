@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  clearForecasts,
-  fetchForecast,
-} from "../../libs/indexed-db/forecast";
+import { clearForecasts, fetchForecast } from "../../libs/indexed-db/forecast";
 import { ForecastResponse } from "../../hooks/forecast/type";
 
 const HomePage: React.FC = () => {
@@ -19,11 +16,11 @@ const HomePage: React.FC = () => {
         if (data) {
           setForecast(data);
         } else {
-          setError('予報データが利用できません。');
+          setError("予報データが利用できません。");
         }
       } catch (err) {
-        console.error('Unexpected error:', err);
-        setError('予期せぬエラーが発生しました。');
+        console.error("Unexpected error:", err);
+        setError("予期せぬエラーが発生しました。");
       } finally {
         setLoading(false);
       }
@@ -33,14 +30,14 @@ const HomePage: React.FC = () => {
 
     // オンラインになった時にデータを再取得
     const handleOnline = () => {
-      console.log('Back online, fetching latest forecast.');
+      console.log("Back online, fetching latest forecast.");
       loadForecast();
     };
 
-    window.addEventListener('online', handleOnline);
+    window.addEventListener("online", handleOnline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
+      window.removeEventListener("online", handleOnline);
     };
   }, []);
 
@@ -60,7 +57,12 @@ const HomePage: React.FC = () => {
           {/* 必要に応じて他の詳細を追加 */}
         </div>
       ))}
-      <button style={{ border: "1px solid black", marginTop: "20px" }} onClick={() => clearForecasts()}>Cache Clear</button>
+      <button
+        style={{ border: "1px solid black", marginTop: "20px" }}
+        onClick={() => clearForecasts()}
+      >
+        Cache Clear
+      </button>
     </div>
   );
 };
