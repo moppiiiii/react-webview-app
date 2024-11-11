@@ -11,6 +11,7 @@ import {
  */
 export async function saveForecast(forecast: unknown): Promise<ForecastEntry> {
   // Validate the forecast data
+  console.log("データをindexedDBに保存します");
   const parsedForecast = ForecastResponseSchema.parse(forecast);
 
   const entry: ForecastEntry = {
@@ -20,6 +21,7 @@ export async function saveForecast(forecast: unknown): Promise<ForecastEntry> {
 
   // Add to IndexedDB
   const id = await db.forecasts.add(entry);
+  console.log("データをindexedDBに保存しました");
   return { ...entry, id };
 }
 
@@ -28,7 +30,9 @@ export async function saveForecast(forecast: unknown): Promise<ForecastEntry> {
  * @returns An array of ForecastResponse objects.
  */
 export async function getAllForecasts(): Promise<ForecastResponse[]> {
+  console.log("データをindexedDBから取得します");
   const entries = await db.forecasts.toArray();
+  console.log("取得が完了したので返却します");
   return entries.map((entry) => entry.data);
 }
 

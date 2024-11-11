@@ -15,6 +15,7 @@ const HomePage: React.FC = () => {
       setLoading(true);
       try {
         if (navigator.onLine) {
+          console.log("オンラインです");
           // Replace with your actual API call
           const response = await fetch(
             `${import.meta.env.VITE_WEATHER_API_URL}/forecast?lat=34.7022887&lon=135.4953509&lang=jp&units=metric&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
@@ -26,8 +27,10 @@ const HomePage: React.FC = () => {
 
           setForecast(data as ForecastResponse);
         } else {
+          console.log("オフラインです");
           // Retrieve from IndexedDB
           const savedForecast = await getLatestForecast();
+          console.log('indexedDBから取得したデータ', savedForecast)
           if (savedForecast) {
             setForecast(savedForecast);
           } else {
