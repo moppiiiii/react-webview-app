@@ -89,6 +89,7 @@ export async function clearForecasts(): Promise<void> {
 export async function fetchForecast(): Promise<ForecastResponse | null> {
   if (navigator.onLine) {
     try {
+      console.log("オンライン状態です。APIからデータを取得します。");
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?lat=34.7022887&lon=135.4953509&lang=jp&units=metric&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
       ); // 実際のAPIエンドポイントに変更してください
