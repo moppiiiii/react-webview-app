@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  clearForecasts,
   getLatestForecast,
   saveForecast,
 } from "../../libs/indexed-db/forecast";
@@ -20,26 +21,46 @@ const HomePage: React.FC = () => {
           const response = await fetch(
             `${import.meta.env.VITE_WEATHER_API_URL}/forecast?lat=34.7022887&lon=135.4953509&lang=jp&units=metric&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
           );
+
+          if (!response.ok) {
+            throw new Error(
+              `Network response was not ok: ${response.statusText}`,
+            );
+          }
+
           const data = await response.json();
 
-          // Save to IndexedDB
-          await saveForecast(data);
-
-          setForecast(data as ForecastResponse);
+          // IndexedDBに保存
+          const saved = await saveForecast(data);
+          if (saved) {
+            setForecast(data as ForecastResponse);
+          } else {
+            throw new Error("Failed to save forecast to IndexedDB.");
+          }
         } else {
           console.log("オフラインです");
           // Retrieve from IndexedDB
           const savedForecast = await getLatestForecast();
-          console.log('indexedDBから取得したデータ', savedForecast)
+          console.log("indexedDBから取得したデータ", savedForecast);
           if (savedForecast) {
             setForecast(savedForecast);
           } else {
             setError("No forecast data available offline.");
           }
         }
-      } catch (err) {
-        setError("Failed to fetch forecast data.");
-        console.error(err);
+      } catch (fetchError) {
+        console.warn(
+          "Fetch failed, attempting to retrieve from IndexedDB:",
+          fetchError,
+        );
+
+        // IndexedDBからデータを取得
+        const savedForecast = await getLatestForecast();
+        if (savedForecast) {
+          setForecast(savedForecast);
+        } else {
+          setError("No forecast data available offline.");
+        }
       } finally {
         setLoading(false);
       }
@@ -66,6 +87,12 @@ const HomePage: React.FC = () => {
       <p>Temperature: {forecast?.list[0].main.temp}°C</p>
       <p>Weather: {forecast?.list[0].weather[0].description}</p>
       {/* Add more details as needed */}
+      <button
+        style={{ border: "1px solid black", marginTop: "20px" }}
+        onClick={() => clearForecasts()}
+      >
+        Cache Clear
+      </button>
     </div>
   );
 };
