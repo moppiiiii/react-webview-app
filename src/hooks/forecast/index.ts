@@ -3,9 +3,10 @@ import { ForecastResponse, UseForecastResponse } from "./type";
 import getUrl from "./libs/getUrl";
 import { fetcher } from "../../libs/fetcher";
 
-const useForecast = (
-  location: { latitude: number; longitude: number },
-): UseForecastResponse => {
+const useForecast = (location: {
+  latitude: number;
+  longitude: number;
+}): UseForecastResponse => {
   const [data, setData] = useState<ForecastResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);

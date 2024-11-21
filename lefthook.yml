@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: false
+  commands:
+    check audit:
+      run: pnpm audit
+    check knip:
+      run: pnpm knip
+    code format:
+      run: pnpm format && git add {staged_files}
+    code check:
+      run: pnpm check
