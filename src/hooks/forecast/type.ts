@@ -74,7 +74,8 @@ const ListItemSchema = z.object({
   rain: RainSchema,
 });
 
-export const ForecastResponseSchema = z.object({
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const ForecastResponseSchema = z.object({
   cod: z.string(),
   message: z.number(),
   cnt: z.number(),
@@ -82,7 +83,6 @@ export const ForecastResponseSchema = z.object({
   city: CitySchema,
 });
 
-export type ListItem = z.TypeOf<typeof ListItemSchema>;
 export type ForecastResponse = z.TypeOf<typeof ForecastResponseSchema>;
 
 export type UseForecastResponse = {
