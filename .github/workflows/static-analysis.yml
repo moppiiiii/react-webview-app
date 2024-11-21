@@ -72,7 +72,6 @@ jobs:
         run: pnpm check
 
   build:
-    name: Build
     needs: [setup, format-check]
     runs-on: ubuntu-latest
 
