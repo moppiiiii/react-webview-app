@@ -1,72 +1,52 @@
-import { useEffect, useState } from "react";
-import { clearForecasts, fetchForecast } from "../../libs/indexed-db/forecast";
-import { ForecastResponse } from "../../hooks/forecast/type";
+import { useEffect, useMemo, useState } from "react";
+import HomeTemplate from "../../components/templates/home/Home.template";
+import { HomeTemplateProps } from "../../components/templates/home/type";
+import useForecast from "../../hooks/forecast";
+import {
+  getCurrentDate,
+  getCurrentTime,
+  getDesignatedDateTime,
+  getTimeZoneClassification,
+} from "../../libs/date";
 
 const HomePage: React.FC = () => {
-  const [forecast, setForecast] = useState<ForecastResponse | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState(getCurrentTime());
+
+  const location = { latitude: 34.7022887, longitude: 135.4953509 };
+  const { data } = useForecast(location);
+
+  const currentDate = getCurrentDate();
 
   useEffect(() => {
-    const loadForecast = async () => {
-      setLoading(true);
-      setError(null); // エラー状態をリセット
-      try {
-        const data = await fetchForecast();
-        if (data) {
-          console.log("Home.page.tsxでデータを受け取りました", data);
-          setForecast(data);
-          console.log("Home.page.tsxでデータをセットしました");
-        } else {
-          setError("予報データが利用できません。");
-        }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-        setError("予期せぬエラーが発生しました。");
-      } finally {
-        setLoading(false);
-      }
-    };
+    // 1秒ごとに時刻を更新するためのインターバルを設定
+    const timerId = setInterval(() => {
+      setCurrentTime(getCurrentTime());
+    }, 1000);
 
-    loadForecast();
-
-    // オンラインになった時にデータを再取得
-    const handleOnline = () => {
-      console.log("Back online, fetching latest forecast.");
-      loadForecast();
-    };
-
-    window.addEventListener("online", handleOnline);
-
-    return () => {
-      window.removeEventListener("online", handleOnline);
-    };
+    // クリーンアップ関数でインターバルをクリア
+    return () => clearInterval(timerId);
   }, []);
 
-  if (loading) return <div>予報を読み込み中...</div>;
-  if (error) return <div>エラー: {error}</div>;
-  if (!forecast) return <div>予報データがありません。</div>;
-
-  return (
-    <div>
-      <h2>{forecast.city.name} の天気予報</h2>
-      {/* 詳細情報の表示 */}
-      {forecast.list.map((item, index) => (
-        <div key={index}>
-          <p>{item.dt_txt}</p>
-          <p>気温: {item.main.temp}°C</p>
-          <p>天気: {item.weather[0].description}</p>
-          {/* 必要に応じて他の詳細を追加 */}
-        </div>
-      ))}
-      <button
-        style={{ border: "1px solid black", marginTop: "20px" }}
-        onClick={() => clearForecasts()}
-      >
-        Cache Clear
-      </button>
-    </div>
+  const homeTemplateProps: HomeTemplateProps = useMemo(
+    () => ({
+      currentDate,
+      currentTime,
+      timeZoneClassification: getTimeZoneClassification(
+        Number(currentTime.split(":")[0]),
+      ),
+      cityName: data?.city.name ?? "",
+      todaysWeatherList:
+        data?.list
+          .filter((v) => v.dt_txt.includes(currentDate))
+          .map((v) => ({
+            weatherType: v.weather[0].main,
+            time: getDesignatedDateTime(v.dt_txt),
+          })) ?? [],
+    }),
+    [currentTime, data, currentDate],
   );
+
+  return <HomeTemplate {...homeTemplateProps} />;
 };
 
 HomePage.whyDidYouRender = true;
