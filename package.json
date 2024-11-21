@@ -9,7 +9,9 @@
     "format": "biome format --write ./src",
     "check": "biome format ./src",
     "preview": "vite preview",
-    "test:unit": "vitest",
+    "test:unit": "vitest run ./src",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report",
     "knip": "knip",
     "lefthook:init": "lefthook install"
   },
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@eslint/js": "^9.11.1",
+    "@playwright/test": "^1.49.0",
     "@types/node": "^22.8.4",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
