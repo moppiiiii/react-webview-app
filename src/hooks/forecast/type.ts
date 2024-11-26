@@ -83,6 +83,8 @@ const ForecastResponseSchema = z.object({
   city: CitySchema,
 });
 
+export type ListItem = z.TypeOf<typeof ListItemSchema>;
+
 export type ForecastResponse = z.TypeOf<typeof ForecastResponseSchema>;
 
 export type UseForecastResponse = {
