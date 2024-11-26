@@ -9,15 +9,9 @@ overrides:
   '@eslint/plugin-kit@<0.2.3': '>=0.2.3'
 
 dependencies:
-  chart.js:
-    specifier: ^4.4.6
-    version: 4.4.6
   react:
     specifier: ^18.3.1
     version: 18.3.1
-  react-chartjs-2:
-    specifier: ^5.2.0
-    version: 5.2.0(chart.js@4.4.6)(react@18.3.1)
   react-dom:
     specifier: ^18.3.1
     version: 18.3.1(react@18.3.1)
@@ -56,6 +50,9 @@ devDependencies:
   '@welldone-software/why-did-you-render':
     specifier: ^8.0.3
     version: 8.0.3(react@18.3.1)
+  chart.js:
+    specifier: ^4.4.6
+    version: 4.4.6
   eslint:
     specifier: ^9.11.1
     version: 9.12.0
@@ -74,6 +71,9 @@ devDependencies:
   lefthook:
     specifier: ^1.8.4
     version: 1.8.4
+  react-chartjs-2:
+    specifier: ^5.2.0
+    version: 5.2.0(chart.js@4.4.6)(react@18.3.1)
   sass:
     specifier: 1.80.4
     version: 1.80.4
@@ -1576,7 +1576,7 @@ packages:
 
   /@kurkle/color@0.3.4:
     resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
-    dev: false
+    dev: true
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2570,7 +2570,7 @@ packages:
     engines: {pnpm: '>=8'}
     dependencies:
       '@kurkle/color': 0.3.4
-    dev: false
+    dev: true
 
   /check-error@2.1.1:
     resolution: {integrity: sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw==}
@@ -4002,7 +4002,7 @@ packages:
     dependencies:
       chart.js: 4.4.6
       react: 18.3.1
-    dev: false
+    dev: true
 
   /react-dom@18.3.1(react@18.3.1):
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
