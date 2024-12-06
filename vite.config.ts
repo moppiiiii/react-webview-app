@@ -30,22 +30,6 @@ export default defineConfig({
         // ランタイムキャッシング設定
         runtimeCaching: [
           {
-            // OpenWeatherMap API のURLパターンに合わせて修正
-            urlPattern: /^https:\/\/api\.openweathermap\.org\/data\/2\.5\/.*/,
-            handler: 'NetworkFirst', // ネットワークファースト戦略
-            options: {
-              cacheName: 'openweather-api-cache',
-              networkTimeoutSeconds: 5, // ネットワークタイムアウト（秒）
-              expiration: {
-                maxEntries: 50, // キャッシュエントリの最大数
-                maxAgeSeconds: 60 * 60 * 24, // 1日（秒）
-              },
-              cacheableResponse: {
-                statuses: [0, 200], // キャッシュ可能なHTTPステータス
-              },
-            },
-          },
-          {
             // 画像などの静的アセットをキャッシュする場合
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/,
             handler: 'NetworkFirst', // キャッシュファースト戦略
