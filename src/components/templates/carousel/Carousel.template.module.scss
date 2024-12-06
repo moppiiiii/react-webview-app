@@ -1,0 +1,92 @@
+.carousel-container {
+    padding: 16px;
+    background-color: #FAFAFA;
+
+    .title {
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 32px; /* 133.333% */
+        letter-spacing: 0.364px;
+    }
+
+    .embla {
+        overflow: hidden;
+        padding-block: 64px 16px;
+
+        .embla__container {
+            display: flex;
+
+            .embla__slide {
+                flex: 0 0 100%;
+                min-width: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+
+    .embla__dots {
+        display: flex;
+        justify-content: center; /* 左右中央に配置 */
+        align-items: center;
+        padding-bottom: 64px;
+      }
+      
+      .embla__dot {
+        background-color: #BAB9B4; /* 現在表示していないスライドの色 */
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin: 0 5px;
+      }
+      
+      .embla__dot.is-active {
+        background-color: #4DAA9F; /* 現在のページの色 */
+        width: 16px;
+        height: 16px;
+      }
+
+    .next-button {
+        width: 100%;
+        padding: 8px 16px;
+        background-color: #FFF;
+        color: #4DAA9F;
+        border-radius: 8px;
+        border: 1px solid #4DAA9F;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 22px; /* 137.5% */
+        letter-spacing: 0.38px;
+    }
+
+    .skip-button {
+        width: 100%;
+        padding: 8px 16px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 22px; /* 137.5% */
+        letter-spacing: 0.38px;
+    }
+
+    .start-button {
+        width: 100%;
+        background: #4DAA9F;
+        color: #FFF;
+        padding: 8px 16px;
+        border-radius: 8px;
+    }
+
+    .annotation {
+        font-size: 11px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px; /* 118.182% */
+        letter-spacing: 0.06px;
+        color: #6F6F6B;
+        padding-top: 24px;
+    }
+}
