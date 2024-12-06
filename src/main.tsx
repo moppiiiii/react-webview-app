@@ -4,9 +4,12 @@ import "./global.scss";
 
 import "./wdyr.ts";
 import AppRoutes from "./AppRoutes.tsx";
+import ErrorBoundaryWrapper from "./components/error-boundary/ErrorBoundaryWrapper.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AppRoutes />
+    <ErrorBoundaryWrapper>
+      <AppRoutes />
+    </ErrorBoundaryWrapper>
   </StrictMode>,
 );
