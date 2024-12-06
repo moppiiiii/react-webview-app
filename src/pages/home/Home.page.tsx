@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(getCurrentTime());
 
   const location = { latitude: 34.7022887, longitude: 135.4953509 };
-  const { data } = useForecast(location);
+  const { data, error } = useForecast(location);
 
   const currentDate = getCurrentDate();
 
@@ -34,16 +34,18 @@ const HomePage: React.FC = () => {
       timeZoneClassification: getTimeZoneClassification(
         Number(currentTime.split(":")[0]),
       ),
-      cityName: data?.city.name ?? "",
+      cityName: data && !error ? data.city.name : "",
       todaysWeatherList:
-        data?.list
-          .filter((v) => v.dt_txt.includes(currentDate))
-          .map((v) => ({
-            weatherType: v.weather[0].main,
-            time: getDesignatedDateTime(v.dt_txt),
-          })) ?? [],
+        data && !error
+          ? data.list
+              .filter((v) => v.dt_txt.includes(currentDate))
+              .map((v) => ({
+                weatherType: v.weather[0].main,
+                time: getDesignatedDateTime(v.dt_txt),
+              }))
+          : [],
     }),
-    [currentTime, data, currentDate],
+    [currentTime, data, currentDate, error],
   );
 
   return <HomeTemplate {...homeTemplateProps} />;

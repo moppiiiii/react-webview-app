@@ -22,12 +22,7 @@ const ErrorBoundaryWrapper: React.FC<ErrorBoundaryWrapperProps> = ({
   children,
 }) => {
   return (
-    <ReactErrorBoundary
-      FallbackComponent={ErrorFallback}
-      onError={(error, info) => {
-        console.error("Caught by ErrorBoundary:", error, info);
-      }}
-    >
+    <ReactErrorBoundary FallbackComponent={ErrorFallback}>
       {children}
     </ReactErrorBoundary>
   );

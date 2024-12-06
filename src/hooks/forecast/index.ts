@@ -14,25 +14,30 @@ const useForecast = (location: {
 
   const forecastUrl = getUrl(location);
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    setIsError(false);
-    setError(null);
-    try {
-      const result = await fetcher<ForecastResponse>(forecastUrl);
-      setData(result);
-    } catch (err) {
-      setIsError(true);
-      setError(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      setIsError(false);
+      setError(null);
+
+      try {
+        const result = await fetcher<ForecastResponse>(forecastUrl);
+
+        if (!result) {
+          throw new Error("No data received");
+        }
+
+        setData(result);
+      } catch (err) {
+        setIsError(true);
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [forecastUrl]); // forecastUrl が変わったときに再フェッチ
+  }, [forecastUrl]);
 
   return {
     data: data!,
