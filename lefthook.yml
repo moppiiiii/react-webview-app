@@ -7,5 +7,5 @@ pre-commit:
       run: pnpm knip
     code format:
       run: pnpm format && git add {staged_files}
-    code check:
+    code format check:
       run: pnpm check

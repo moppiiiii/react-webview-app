@@ -1,6 +1,6 @@
 declare const classNames: {
-  readonly "chart-container": "chart-container";
-  readonly "chart-wrapper": "chart-wrapper";
+  readonly "rechart-container": "rechart-container";
+  readonly "rechart-wrapper": "rechart-wrapper";
   readonly title: "title";
   readonly "data-layer": "data-layer";
   readonly "data-layer-item": "data-layer-item";

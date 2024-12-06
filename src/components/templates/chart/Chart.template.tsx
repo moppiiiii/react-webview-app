@@ -1,4 +1,4 @@
-import BaseLayout from "../../layouts/base-layout/Base.layout";
+// import BaseLayout from "../../layouts/base-layout/Base.layout";
 import { ChartTemplateProps } from "./type";
 import {
   Chart as ChartJS,
@@ -110,18 +110,40 @@ const options: ChartOptions = {
 };
 
 const ChartTemplate: React.FC<ChartTemplateProps> = ({
-  timeZoneClassification,
+  // timeZoneClassification,
   weatherList,
 }) => {
   console.log(weatherList);
   return (
-    <BaseLayout timeZoneClassification={timeZoneClassification}>
-      <div className={styles["chart-container"]}>
-        <div className={styles["chart-wrapper"]}>
-          <Chart type="bar" data={data} options={options} />
+    // <BaseLayout timeZoneClassification={timeZoneClassification}>
+    //   <div className={styles["chart-container"]}>
+    //     <div className={styles["chart-wrapper"]}>
+    //       <Chart type="bar" data={data} options={options} />
+    //     </div>
+    //   </div>
+    // </BaseLayout>
+    <div className={styles["chart-container"]}>
+      <div className={styles["chart-wrapper"]}>
+        <p className={styles["title"]}>今週の記事閲覧数</p>
+        <div className={styles["data-layer"]}>
+          <div className={styles["data-layer-item"]}>
+            <p className={styles["data-name"]}>あなた</p>
+            <div className={styles["data-detail"]}>
+              <p className={styles["data-value"]}>25</p>
+              <p className={styles["data-text"]}>記事</p>
+            </div>
+          </div>
+          <div className={styles["data-layer-item"]}>
+            <p className={styles["data-name"]}>他ユーザーの平均</p>
+            <div className={styles["data-detail"]}>
+              <p className={styles["data-value"]}>32.8</p>
+              <p className={styles["data-text"]}>記事</p>
+            </div>
+          </div>
         </div>
+        <Chart type="bar" data={data} options={options} />
       </div>
-    </BaseLayout>
+    </div>
   );
 };
 
