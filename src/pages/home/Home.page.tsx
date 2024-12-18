@@ -8,6 +8,7 @@ import {
   getDesignatedDateTime,
   getTimeZoneClassification,
 } from "../../libs/date";
+import ErrorBoundaryWrapper from "../../components/error-boundary/ErrorBoundaryWrapper";
 
 const HomePage: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(getCurrentTime());
@@ -48,7 +49,11 @@ const HomePage: React.FC = () => {
     [currentTime, data, currentDate, error],
   );
 
-  return <HomeTemplate {...homeTemplateProps} />;
+  return (
+    <ErrorBoundaryWrapper>
+      <HomeTemplate {...homeTemplateProps} />
+    </ErrorBoundaryWrapper>
+  );
 };
 
 HomePage.whyDidYouRender = true;
