@@ -20,6 +20,11 @@ const HomeTemplate: React.FC<HomeTemplateProps> = ({
           todaysWeatherList={todaysWeatherList}
         />
       </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <a href="/400">400 Bad Request エラーレスポンス検証</a>
+        <a href="/401">401 Unauthorized エラーレスポンス検証</a>
+        <a href="/500">500 Internal Server Error エラーレスポンス検証</a>
+      </div>
     </BaseLayout>
   );
 };
