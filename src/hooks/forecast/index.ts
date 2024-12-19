@@ -21,9 +21,7 @@ const useForecast = (location: {
       setError(null);
 
       try {
-        console.log("fetchData");
         const result = await fetcher<ForecastResponse>(forecastUrl);
-        console.log("result", result);
         if (!result) {
           throw new Error("No data received");
         }

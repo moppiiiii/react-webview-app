@@ -4,9 +4,15 @@ import "./global.scss";
 
 import "./wdyr.ts";
 import AppRoutes from "./AppRoutes.tsx";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "./components/error-boundary/ErrorFallback.tsx";
+import { NetworkStatusCheck } from "./components/error-boundary/NetworkStatusCheck.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AppRoutes />
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <NetworkStatusCheck />
+      <AppRoutes />
+    </ErrorBoundary>
   </StrictMode>,
 );

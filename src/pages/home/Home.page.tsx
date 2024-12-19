@@ -8,13 +8,17 @@ import {
   getDesignatedDateTime,
   getTimeZoneClassification,
 } from "../../libs/date";
-import ErrorBoundaryWrapper from "../../components/error-boundary/ErrorBoundaryWrapper";
 
 const HomePage: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(getCurrentTime());
 
   const location = { latitude: 34.7022887, longitude: 135.4953509 };
   const { data, error } = useForecast(location);
+
+  // エラーがある場合は、ErrorBoundaryに伝播させる
+  if (error) {
+    throw error;
+  }
 
   const currentDate = getCurrentDate();
 
@@ -49,11 +53,7 @@ const HomePage: React.FC = () => {
     [currentTime, data, currentDate, error],
   );
 
-  return (
-    <ErrorBoundaryWrapper>
-      <HomeTemplate {...homeTemplateProps} />
-    </ErrorBoundaryWrapper>
-  );
+  return <HomeTemplate {...homeTemplateProps} />;
 };
 
 HomePage.whyDidYouRender = true;
